@@ -7,8 +7,10 @@ s = socket.socket()
 
 print(f"Connection au serveur {HOST_IP}, port {HOST_PORT}")
 
-s.connect((HOST_IP, HOST_PORT))
-
-print("Connecté au serveur")
-
-s.close()
+try:
+    s.connect((HOST_IP, HOST_PORT))
+except ConnectionRefusedError:
+    print("ERREUR : impossible de se connecter au serveur !")
+else:
+    print("Connecté au serveur")
+    s.close()
