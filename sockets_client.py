@@ -20,11 +20,14 @@ while True:
         print("Connecté au serveur")
         break
 
-datas_recues = s.recv(MAX_DATA_SIZE)
+while True:
+    datas_recues = s.recv(MAX_DATA_SIZE)
 
-if datas_recues:
-    print(datas_recues.decode())
-else:
-    print("Aucune data")
+    if not datas_recues:
+        break
+    print("Message : ", datas_recues.decode())
+
+    texte_envoye = input("Vous: ")
+    s.sendall(texte_envoye.encode())
 
 s.close()

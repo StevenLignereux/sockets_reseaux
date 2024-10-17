@@ -10,6 +10,8 @@ import socket
 
 HOST_IP = "127.0.0.1"
 HOST_PORT = 32000
+MAX_DATA_SIZE = 1024
+
 
 s = socket.socket()
 
@@ -23,8 +25,14 @@ connection_socket, client_address = s.accept()
 
 print(f"Connexion établie avec {client_address}")
 
-texte_envoye = "Bonjour client!"
-connection_socket.sendall(texte_envoye.encode())
+while True:
+    texte_envoye = input("Vous: ")
+    connection_socket.sendall(texte_envoye.encode())
+    datas_recues = connection_socket.recv(MAX_DATA_SIZE)
+
+    if not datas_recues:
+        break
+    print("Message : ", datas_recues.decode())
 
 s.close()
 connection_socket.close()
